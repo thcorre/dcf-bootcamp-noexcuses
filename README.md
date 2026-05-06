@@ -14,8 +14,8 @@
 
 This lab represents a small Clos fabric with [Nokia SR Linux](https://learn.srlinux.dev/) switches running as containers. The lab topology consists of a Clos topology, plus a Streaming Telemetry stack comprised of [gnmic](https://gnmic.openconfig.net), prometheus and grafana applications.
 
-For this Bootcamp, Leaf1 Fabric (Underlay) and Service (Overlay) configurations have been removed so that Leaf1 is isolated from the rest of the DC fabric and Server 1 cannot reach Servers 2 and 3.
-The objective of this Bootcamp is to recreate the missing configuration in order for Server 1 to be able to ping Servers 2 and 3 (via the Overlay network).
+For this Bootcamp, Leaf1 Fabric (Underlay) and Service (Overlay) configurations have been removed so that Leaf1 is isolated from the rest of the DC fabric and Client-1 cannot reach Client-2 and Client-3.
+The objective of this Bootcamp is to recreate the missing configuration in order for Client-1 to be able to ping Client-2 and Client-3 (via the Overlay network).
 
 ---
 
