@@ -1,4 +1,4 @@
-# Nokia SR Linux Streaming Telemetry Lab
+# Nokia DCF Bootcamp
 
 [![Discord][discord-svg]][discord-url] [![DevPod][devpod-svg]][devpod-url] [![Codespaces][codespaces-svg]][codespaces-url]  
 ![w212][w212][Learn more](https://containerlab.dev/macos/#devpod) ![w90][w90][Learn more](https://containerlab.dev/manual/codespaces)
@@ -12,9 +12,10 @@
 [w212]: https://gitlab.com/rdodin/pics/-/wikis/uploads/718a32dfa2b375cb07bcac50ae32964a/w212h1.svg
 [w90]: https://gitlab.com/rdodin/pics/-/wikis/uploads/bf1b8ea28b4528eb1b66567355a13c5c/w90h1.svg
 
-SR Linux has first-class Streaming Telemetry support thanks to [100% YANG coverage](https://learn.srlinux.dev/yang/) of state and config data. The holistic coverage enables SR Linux users to stream **any** data off of the NOS with on-change, sample, or target-defined support. A discrepancy in visibility across APIs is not about SR Linux.
-
 This lab represents a small Clos fabric with [Nokia SR Linux](https://learn.srlinux.dev/) switches running as containers. The lab topology consists of a Clos topology, plus a Streaming Telemetry stack comprised of [gnmic](https://gnmic.openconfig.net), prometheus and grafana applications.
+
+For this Bootcamp, Leaf1 Fabric (Underlay) and Service (Overlay) configurations have been removed so that Leaf1 is isolated from the rest of the DC fabric and Server 1 cannot reach Servers 2 and 3.
+The objective of this Bootcamp is to recreate the missing configuration in order for Server 1 to be able to ping Servers 2 and 3 (via the Overlay network).
 
 ---
 
