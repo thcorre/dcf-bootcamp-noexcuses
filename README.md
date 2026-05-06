@@ -21,31 +21,6 @@ The objective of this Bootcamp is to recreate the missing configuration in order
 
 ![pic1](https://gitlab.com/rdodin/pics/-/wikis/uploads/0784c31d48ec18fd24111ad8d73478b0/image.png)
 
-In addition to the telemetry stack, the lab also includes a modern logging stack comprised of [Grafana Alloy](https://grafana.com/docs/alloy/latest/) and [loki](https://grafana.com/oss/loki/).
-
-Goals of this lab:
-
-1. Demonstrate how a telemetry stack can be incorporated into the containerlab topology file.
-2. Explain SR Linux holistic telemetry support.
-3. Provide practical configuration examples for the gnmic collector to subscribe to fabric nodes and export metrics to Prometheus TSDB.
-4. Introduce advanced Grafana dashboarding with [FlowPlugin](https://grafana.com/grafana/plugins/andrewbmchugh-flow-panel/) plugin rendering port speeds and statuses.
-5. Give a sneak peek of the modern logging telemetry stack with Loki and Promtail to consume Syslog data from SR Linux nodes.
-
-## Deploying the lab
-
-The lab is deployed with the [containerlab](https://containerlab.dev) project, where [`st.clab.yml`](st.clab.yml) file declaratively describes the lab topology.
-
-```bash
-# change into the cloned directory
-# and execute
-containerlab deploy --reconfigure
-```
-
-To remove the lab:
-
-```bash
-containerlab destroy --cleanup
-```
 
 ## Accessing the network elements
 
@@ -66,7 +41,7 @@ The DC fabric used in this lab consists of three leaves and two spines interconn
 
 ![pic](https://gitlab.com/rdodin/pics/-/wikis/uploads/14c768a04fc30e09b0bf5cf0b57b5b63/image.png)
 
-Leaves and spines use Nokia SR Linux IXR-D2 and IXR-D3L chassis respectively. Each network element of this topology is equipped with a [startup configuration file](configs/fabric/) that is applied at the node's startup.
+Leaves and spines use Nokia SR Linux IXR-D2L and IXR-D3L chassis respectively. Each network element of this topology is equipped with a [startup configuration file](configs/fabric/) that is applied at the node's startup.
 
 Once booted, network nodes will come up with interfaces, underlay protocols and overlay service configured. The fabric is running Layer 2 EVPN service between the leaves.
 
