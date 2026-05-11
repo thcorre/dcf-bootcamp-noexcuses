@@ -75,7 +75,7 @@ ssh admin@spine1
 docker exec -it client1 bash
 ```
 
-## Fabric configuration
+## Fabric configuration (underlay)
 
 The DC fabric used in this lab consists of three leaves and two spines interconnected as shown in the diagram.
 
@@ -85,7 +85,75 @@ Leaves and spines use Nokia SR Linux IXR-D2L and IXR-D3L chassis respectively. E
 
 Once booted, network nodes will come up with interfaces, underlay protocols and overlay service configured. The fabric is running Layer 2 EVPN service between the leaves.
 
-### Verifying the underlay and overlay status
+### Uplink and System Interfaces
+
+```bash
+# uplink interface ethernet-1/49 configuration
+set / interface ethernet-1/49
+set / interface ethernet-1/49 admin-state enable
+set / interface ethernet-1/49 subinterface 0
+set / interface ethernet-1/49 subinterface 0 admin-state enable
+set / interface ethernet-1/49 subinterface 0 ip-mtu 9000
+set / interface ethernet-1/49 subinterface 0 ipv4
+set / interface ethernet-1/49 subinterface 0 ipv4 admin-state enable
+set / interface ethernet-1/49 subinterface 0 ipv4 address 192.168.11.0/31
+
+# uplink interface ethernet-1/50 configuration
+set / interface ethernet-1/50
+set / interface ethernet-1/50 admin-state enable
+set / interface ethernet-1/50 subinterface 0
+set / interface ethernet-1/50 subinterface 0 admin-state enable
+set / interface ethernet-1/50 subinterface 0 ip-mtu 9000
+set / interface ethernet-1/50 subinterface 0 ipv4
+set / interface ethernet-1/50 subinterface 0 ipv4 admin-state enable
+set / interface ethernet-1/50 subinterface 0 ipv4 address 192.168.12.0/31
+
+# system interface configuration
+set / interface system0
+set / interface system0 admin-state enable
+set / interface system0 subinterface 0
+set / interface system0 subinterface 0 admin-state enable
+set / interface system0 subinterface 0 ipv4
+set / interface system0 subinterface 0 ipv4 admin-state enable
+set / interface system0 subinterface 0 ipv4 address 10.0.1.1/32
+
+# associating interfaces with net-ins default
+set / network-instance default interface ethernet-1/49.0
+set / network-instance default interface ethernet-1/50.0
+set / network-instance default interface system0.0
+```
+
+### BGP
+
+### eBGP neighbors
+
+```bash
+set / network-instance default protocols bgp neighbor 192.168.11.1
+set / network-instance default protocols bgp neighbor 192.168.11.1 admin-state enable
+set / network-instance default protocols bgp neighbor 192.168.11.1 peer-as 201
+set / network-instance default protocols bgp neighbor 192.168.11.1 peer-group eBGP-underlay
+
+set / network-instance default protocols bgp neighbor 192.168.12.1
+set / network-instance default protocols bgp neighbor 192.168.12.1 admin-state enable
+set / network-instance default protocols bgp neighbor 192.168.12.1 peer-as 202
+set / network-instance default protocols bgp neighbor 192.168.12.1 peer-group eBGP-underlay
+```
+
+## EVPN configuration (overlay)
+
+### BGP-EVPN configuration
+
+```bash
+set / network-instance vrf-1 protocols
+set / network-instance vrf-1 protocols bgp-evpn
+set / network-instance vrf-1 protocols bgp-evpn bgp-instance 1
+set / network-instance vrf-1 protocols bgp-evpn bgp-instance 1 admin-state enable
+set / network-instance vrf-1 protocols bgp-evpn bgp-instance 1 vxlan-interface vxlan1.1
+set / network-instance vrf-1 protocols bgp-evpn bgp-instance 1 evi 1
+set / network-instance vrf-1 protocols bgp-evpn bgp-instance 1 ecmp 2
+```
+
+## Verifying the underlay and overlay status
 
 The underlay network runs eBGP, while iBGP is used for the overlay network. The Layer 2 EVPN service is configured as explained in this comprehensive tutorial: [L2EVPN on Nokia SR Linux](https://learn.srlinux.dev/tutorials/l2evpn/intro/).
 
