@@ -68,7 +68,7 @@ Once the lab has been deployed, the different SR Linux nodes can be accessed via
 
 ```bash
 # reach a SR Linux leaf or a spine via SSH
-ssh admin@leaf1
+ssh leaf1
 ssh admin@spine1
 
 # reach a Linux client via Docker
