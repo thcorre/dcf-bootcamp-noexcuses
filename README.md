@@ -1,4 +1,4 @@
-# Nokia DCF Bootcamp
+# Nokia DCF Bootcamp #NoExcuses
 
 [![Discord][discord-svg]][discord-url] [![DevPod][devpod-svg]][devpod-url] [![Codespaces][codespaces-svg]][codespaces-url]  
 ![w212][w212][Learn more](https://containerlab.dev/macos/#devpod) ![w90][w90][Learn more](https://containerlab.dev/manual/codespaces)
