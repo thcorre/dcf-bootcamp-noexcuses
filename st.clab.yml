@@ -7,8 +7,8 @@ prefix: ""
 
 mgmt:
   network: dcf-${GROUP_ID}
-  ipv4-subnet: 172.80.${GROUP_ID}0.0/24
-  ipv6-subnet: 3fff:172:80:${GROUP_ID}0::/64
+  ipv4-subnet: 172.80.${GROUP_ID}.0/24
+  ipv6-subnet: 3fff:172:80:${GROUP_ID}::/64
 
 topology:
   defaults:
@@ -27,37 +27,37 @@ topology:
       type: ixr-d3l
       group: spine
       startup-config: configs/fabric/spine1.cfg
-      mgmt-ipv4: 172.80.${GROUP_ID}0.21
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::21
+      mgmt-ipv4: 172.80.${GROUP_ID}.21
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::21
     spine2:
       type: ixr-d3l
       group: spine
       startup-config: configs/fabric/spine2.cfg
-      mgmt-ipv4: 172.80.${GROUP_ID}0.22
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::22  
+      mgmt-ipv4: 172.80.${GROUP_ID}.22
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::22  
 
     ### LEAFS ###
     leaf1:
       startup-config: configs/fabric/leaf1.cfg
-      mgmt-ipv4: 172.80.${GROUP_ID}0.11
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::11
+      mgmt-ipv4: 172.80.${GROUP_ID}.11
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::11
       group: leaf
     leaf2:
       startup-config: configs/fabric/leaf2.cfg
-      mgmt-ipv4: 172.80.${GROUP_ID}0.12
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::12
+      mgmt-ipv4: 172.80.${GROUP_ID}.12
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::12
       group: leaf
     leaf3:
       startup-config: configs/fabric/leaf3.cfg
-      mgmt-ipv4: 172.80.${GROUP_ID}0.13
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::13
+      mgmt-ipv4: 172.80.${GROUP_ID}.13
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::13
       group: leaf
 
     ### CLIENTS ###
     client1:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.31
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::31
+      mgmt-ipv4: 172.80.${GROUP_ID}.31
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::31
       exec:
         - ip address add 172.17.0.1/24 dev eth1
         - ip -6 address add 2002::172:17:0:1/96 dev eth1
@@ -66,8 +66,8 @@ topology:
       group: server
     client2:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.32
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::32
+      mgmt-ipv4: 172.80.${GROUP_ID}.32
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::32
       binds:
         - configs/client2:/config
       exec:
@@ -76,8 +76,8 @@ topology:
       group: server
     client3:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.33
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::33
+      mgmt-ipv4: 172.80.${GROUP_ID}.33
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::33
       binds:
         - configs/client3:/config
       exec:
@@ -88,8 +88,8 @@ topology:
     ### TELEMETRY STACK ###
     gnmic:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.41
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::41
+      mgmt-ipv4: 172.80.${GROUP_ID}.41
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::41
       image: ghcr.io/openconfig/gnmic:0.45.0
       binds:
         - configs/gnmic/gnmic-config.yml:/gnmic-config.yml:ro
@@ -98,8 +98,8 @@ topology:
 
     prometheus:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.42
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::42
+      mgmt-ipv4: 172.80.${GROUP_ID}.42
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::42
       image: quay.io/prometheus/prometheus:v3.11.3
       binds:
         - configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -110,8 +110,8 @@ topology:
 
     grafana:
       kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.43
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::43
+      mgmt-ipv4: 172.80.${GROUP_ID}.43
+      mgmt-ipv6: 3fff:172:80:${GROUP_ID}::43
       image: grafana/grafana:13.0.1
       binds:
         - configs/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
@@ -128,29 +128,6 @@ topology:
         GF_AUTH_ANONYMOUS: "true"
         GF_AUTH_OAUTH_AUTO_LOGIN: "true"
       group: "10"
-
-    ### LOGGING STACK ###
-    alloy:
-      kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.45
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::45
-      image: grafana/alloy:v1.16.0
-      binds:
-        - configs/alloy/alloy-config.alloy:/etc/alloy/config.alloy:ro
-      cmd: run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
-      ports:
-        - 123${GROUP_ID}:12345
-
-    loki:
-      kind: linux
-      mgmt-ipv4: 172.80.${GROUP_ID}0.46
-      mgmt-ipv6: 3fff:172:80:${GROUP_ID}0::46
-      image: grafana/loki:3.7.1
-      binds:
-        - configs/loki:/etc/loki
-      cmd: --config.file=/etc/loki/loki-config.yml
-      ports:
-        - 310${GROUP_ID}:3100
 
   links:
     - endpoints: [ "spine1:e1-1", "leaf1:e1-49" ]
