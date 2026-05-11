@@ -22,6 +22,46 @@ The objective of this Bootcamp is to recreate the missing configuration elements
 ![pic1](https://gitlab.com/rdodin/pics/-/wikis/uploads/0784c31d48ec18fd24111ad8d73478b0/image.png)
 
 
+## Lab Environment
+
+For this workshop each group of participants will receive their own dedicated directory running an instance of the lab topology.
+
+If everything went according to plan, you should have received a physical piece of paper which contains:
+- A group ID allocated to your group
+- SSH credentials to a public cloud instance dedicated to your group. 
+- HTTPS URL's towards this repo and access to a web based IDE in case you don't have one installed on your operating system.
+
+!!! Warning
+    Make sure to backup any code, config, ... ^^offline (e.g your laptop)^^.
+
+    The public cloud instance will be destroyed once the workshop is concluded.
+
+### Group ID
+
+Please refer to the paper provided by the workshop session leaders. If nothing has been provided, not a problem, pop your hand in the air and an eager expert will be there to allocate one for you.
+
+### VS Code (Recommended)
+
+Each group has a web VS Code environment available, multiple users are available to connect to the web vscode session at the same time.
+
+Navigate to `group<GROUP ID>.topologies.dev` and log in with your group password.
+
+![](./code-server.png)
+
+### SSH
+
+- Hostname: **refer to the paper provided**
+- Username: **refer to the paper provided or the slide presented**
+- Password: **refer to the paper provided or the slide presented**
+
+!!! tip
+    To enable password-less access to an instance, use `ssh-keygen -h` to generate a public/private key pair and then `ssh-copy-id` to copy it to the server.
+
+### WiFi
+
+Details provided in the session.
+
+
 ## Accessing the network elements
 
 Once the lab has been deployed, the different SR Linux nodes can be accessed via SSH through their management IP address, given in the summary displayed after the execution of the deploy command. It is also possible to reach those nodes directly via their hostname, defined in the topology file. Linux clients cannot be reached via SSH, as it is not enabled, but it is possible to connect to them with a docker exec command.
